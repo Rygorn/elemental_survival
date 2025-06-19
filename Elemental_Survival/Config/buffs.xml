@@ -1,0 +1,201 @@
+
+<configs>
+	<append xpath="/buffs/buff[@name='buffStatusCheck01']">
+		<effect_group>
+			<triggered_effect trigger="onSelfBuffUpdate" action="CVarLogValue" cvar="_sheltered"/>
+			<triggered_effect trigger="onSelfBuffUpdate" action="CVarLogValue" cvar="_shaded"/>
+			<triggered_effect trigger="onSelfBuffUpdate" action="CVarLogValue" cvar="_wetness"/>
+			
+			
+			<!-- Weather Survival HOT -->
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddOrRemoveBuff" buff="buffElementHot">
+				<requirement name="!HasBuff" buff="god"/>
+				<requirement name="CVarCompare" cvar="_coretemp" operation="GT" value="10"/>
+				<requirement name="CVarCompare" cvar="_coretemp" operation="LT" value="30"/>
+			</triggered_effect>
+
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddOrRemoveBuff" buff="buffElementSweltering">
+				<requirement name="!HasBuff" buff="god"/>
+				<requirement name="ProgressionLevel" progression_name="perkWellInsulated" operation="LT" value="3"/>
+				<requirement name="CVarCompare" cvar="_coretemp" operation="GTE" value="30"/>
+			</triggered_effect>
+
+			<!-- Weather Survival COLD -->
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddOrRemoveBuff" buff="buffElementCold">
+				<requirement name="!HasBuff" buff="god"/>
+				<requirement name="CVarCompare" cvar="_coretemp" operation="LT" value="-10"/>
+				<requirement name="CVarCompare" cvar="_coretemp" operation="GT" value="-30"/>
+			</triggered_effect>
+
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddOrRemoveBuff" buff="buffElementFreezing">
+				<requirement name="!HasBuff" buff="god"/>
+				<requirement name="CVarCompare" cvar="_coretemp" operation="LTE" value="-30"/>
+				<requirement name="ProgressionLevel" progression_name="perkWellInsulated" operation="LT" value="3"/>
+			</triggered_effect>
+
+			<!-- Weather Survival WETNESS -->
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="buffElementWet">
+				<requirement name="CVarCompare" cvar="_wetness" operation="GT" value=".15"/>
+			</triggered_effect>
+		</effect_group>
+	</append>
+		
+		
+	<!-- *** xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+	<!-- **** Elemental Debuffs: Hot, Cold, Burning, Freezing, Shock, etc. -->
+	<!-- *** xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+	<append xpath="/buffs">
+		<!-- *** buffElementHot -->
+		<!-- TRIGGERED_BY: Buffs = buffStatusCheck01 -->
+		<!-- Being hot decreases water over time -->
+		<buff name="buffElementHot" name_key="buffElementHotName" description_key="buffElementHotDesc" tooltip_key="buffElementHotTooltip" icon="ui_game_symbol_hot" icon_color="255,128,0">
+			<damage_type value="heat"/>
+			<stack_type value="ignore"/>
+
+			<effect_group>
+				<!-- Blinks the display -->
+				<passive_effect name="BuffBlink" operation="base_set" value="2" duration="0,3" tags="buffElementHot"/>
+				<!-- Increase water loss when regenerating stamina -->
+				<passive_effect name="WaterLossPerStaminaPointGained" operation="perc_add" value="3"/>
+				<passive_effect name="WaterLossPerStaminaPointGained" operation="perc_add" value="-.45">
+					<requirement name="ProgressionLevel" progression_name="perkWellInsulated" operation="Equals" value="1"/></passive_effect>
+				<passive_effect name="WaterLossPerStaminaPointGained" operation="perc_add" value="-.9">
+					<requirement name="ProgressionLevel" progression_name="perkWellInsulated" operation="GTE" value="2"/></passive_effect>
+				<!-- Handler for screen effects -->
+				<triggered_effect trigger="onSelfBuffStart" action="ModifyScreenEffect" intensity="1" fade="3" effect_name="Hot"/>
+				<triggered_effect trigger="onSelfBuffRemove" action="ModifyScreenEffect" intensity="0" fade="3" effect_name="Hot"/>
+			</effect_group>
+		</buff>
+
+		<!-- *** buffElementSweltering -->
+		<!-- TRIGGERED_BY: Buffs = buffStatusCheck01 -->
+		<!-- Sweltering decreases food water than hot -->
+		<buff name="buffElementSweltering" name_key="buffElementSwelteringName" description_key="buffElementSwelteringDesc" tooltip_key="buffElementSwelteringTooltip" icon="ui_game_symbol_hot" icon_color="255,0,0" icon_blink="true">
+			<damage_type value="heat"/>
+			<stack_type value="ignore"/>
+
+			<effect_group>
+				<!-- Blinks the display -->
+				<passive_effect name="BuffBlink" operation="base_set" value="2" duration="0,3" tags="buffElementSweltering"/>
+				<!-- Remove hot buff -->
+				<triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="buffElementHot"/>
+				<!-- Increase water loss when regenerating stamina more than buffElementHot -->
+				<passive_effect name="WaterLossPerStaminaPointGained" operation="perc_add" value="6"/>
+				<passive_effect name="WaterLossPerStaminaPointGained" operation="perc_add" value="-.9">
+					<requirement name="ProgressionLevel" progression_name="perkWellInsulated" operation="Equals" value="1"/></passive_effect>
+				<passive_effect name="WaterLossPerStaminaPointGained" operation="perc_add" value="-1.8">
+					<requirement name="ProgressionLevel" progression_name="perkWellInsulated" operation="GTE" value="2"/></passive_effect>
+				<!-- Handler for screen effects -->
+				<triggered_effect trigger="onSelfBuffStart" action="ModifyScreenEffect" intensity="1" fade="3" effect_name="Hot2"/>
+				<triggered_effect trigger="onSelfBuffRemove" action="ModifyScreenEffect" intensity="0" fade="3" effect_name="Hot2"/>
+			</effect_group>
+		</buff>
+
+		<!-- *** buffElementCold -->
+		<!-- TRIGGERED_BY: Buffs = buffStatusCheck01 -->
+		<!-- Being cold decreases food over time -->
+		<buff name="buffElementCold" name_key="buffElementColdName" description_key="buffElementColdDesc" tooltip_key="buffElementColdTooltip" icon="ui_game_symbol_cold" icon_color="255,128,0">
+			<damage_type value="cold"/>
+			<stack_type value="ignore"/>
+
+			<effect_group>
+				<!-- Blinks the display -->
+				<passive_effect name="BuffBlink" operation="base_set" value="2" duration="0,3" tags="buffElementCold"/>
+				<!-- Decrease food over time -->
+				<passive_effect name="FoodChangeOT" operation="perc_add" value=".3"/>
+				<passive_effect name="FoodChangeOT" operation="perc_add" value="-.045">
+					<requirement name="ProgressionLevel" progression_name="perkWellInsulated" operation="Equals" value="1"/></passive_effect>
+				<passive_effect name="FoodChangeOT" operation="perc_add" value="-.09">
+					<requirement name="ProgressionLevel" progression_name="perkWellInsulated" operation="GTE" value="2"/></passive_effect>
+				<!-- Consume food faster when regenerating stamina -->
+				<passive_effect name="FoodLossPerStaminaPointGained" operation="perc_add" value="1"/>
+				<passive_effect name="FoodLossPerStaminaPointGained" operation="perc_add" value="-.15">
+					<requirement name="ProgressionLevel" progression_name="perkWellInsulated" operation="Equals" value="1"/></passive_effect>
+				<passive_effect name="FoodLossPerStaminaPointGained" operation="perc_add" value="-.3">
+					<requirement name="ProgressionLevel" progression_name="perkWellInsulated" operation="GTE" value="2"/></passive_effect>
+				<!-- Handler for screen effects -->
+				<triggered_effect trigger="onSelfBuffStart" action="ModifyScreenEffect" intensity="1" fade="3" effect_name="Cold"/>
+				<triggered_effect trigger="onSelfBuffRemove" action="ModifyScreenEffect" intensity="0" fade="3" effect_name="Cold"/>
+			</effect_group>
+		</buff>
+
+		<!-- *** buffElementFreezing -->
+		<!-- TRIGGERED_BY: Buffs = buffStatusCheck01 -->
+		<!-- Freezing decreases food faster than cold -->
+		<buff name="buffElementFreezing" name_key="buffElementFreezingName" description_key="buffElementFreezingDesc" tooltip_key="buffElementFreezingTooltip" icon="ui_game_symbol_cold" icon_color="255,0,0" icon_blink="true">
+			<damage_type value="cold"/>
+			<stack_type value="ignore"/>
+
+			<effect_group>
+				<!-- Blinks the display -->
+				<passive_effect name="BuffBlink" operation="base_set" value="2" duration="0,3" tags="buffElementFreezing"/>
+				<!-- Remove cold buff -->
+				<triggered_effect trigger="onSelfBuffStart" action="RemoveBuff" buff="buffElementCold"/>
+				<!-- Decrease food faster over time compared to buffElementCold -->
+				<passive_effect name="FoodChangeOT" operation="perc_add" value=".6"/>
+				<passive_effect name="FoodChangeOT" operation="perc_add" value="-.09">
+					<requirement name="ProgressionLevel" progression_name="perkWellInsulated" operation="Equals" value="1"/></passive_effect>
+				<passive_effect name="FoodChangeOT" operation="perc_add" value="-.18">
+					<requirement name="ProgressionLevel" progression_name="perkWellInsulated" operation="GTE" value="2"/></passive_effect>
+				<!-- Consume food faster when regenerating stamina compared to buffElementCold -->
+				<passive_effect name="FoodLossPerStaminaPointGained" operation="perc_add" value="2"/>
+				<passive_effect name="FoodLossPerStaminaPointGained" operation="perc_add" value="-.3">
+					<requirement name="ProgressionLevel" progression_name="perkWellInsulated" operation="Equals" value="1"/></passive_effect>
+				<passive_effect name="FoodLossPerStaminaPointGained" operation="perc_add" value="-.6">
+					<requirement name="ProgressionLevel" progression_name="perkWellInsulated" operation="GTE" value="2"/></passive_effect>
+				<!-- Handler for screen effects -->
+				<triggered_effect trigger="onSelfBuffStart" action="ModifyScreenEffect" intensity="1" fade="3" effect_name="Cold2"/>
+				<triggered_effect trigger="onSelfBuffRemove" action="ModifyScreenEffect" intensity="0" fade="3" effect_name="Cold2"/>
+			</effect_group>
+		</buff>
+
+		<!-- *** buffElementWet -->
+		<!-- TRIGGERED_BY: Buffs = buffStatusCheck01 -->
+		<!-- Displays a percentage of wetness and adjusts thermal resistance stats -->
+		<buff name="buffElementWet" name_key="buffElementWetName" description_key="buffElementWetDesc" tooltip_key="buffElementWetTooltip" icon="ui_game_symbol_wet">
+			<damage_type value="cold"/>
+			<stack_type value="ignore"/>
+			<update_rate value="2.4"/>
+			<display_value_key value="{0:0.0}%"/>
+			<display_value value="$WetTempModifierDisplay"/>
+
+			<effect_group>
+				<!-- Blinks the display -->
+				<passive_effect name="BuffBlink" operation="base_set" value="2" duration="0,3" tags="buffElementWet"/>
+				<!-- Setup the initial counters -->
+				<triggered_effect trigger="onSelfBuffStart" action="ModifyCVar" cvar="$WetTempModifier" operation="set" value="2"/>
+				<triggered_effect trigger="onSelfBuffStart" action="ModifyCVar" cvar="$WetTempModifierActive" operation="set" value="2"/>
+				<!-- Setup the counter to the game variable and maths -->
+				<triggered_effect trigger="onSelfBuffUpdate" action="ModifyCVar" cvar="$WetTempModifier" operation="set" value="@_wetness"/>
+				<triggered_effect trigger="onSelfBuffUpdate" action="ModifyCVar" cvar="$WetTempModifier" operation="multiply" value="16"/>
+				<!-- If the updated value is GT active counter, set active counter -->
+				<triggered_effect trigger="onSelfBuffUpdate" action="ModifyCVar" cvar="$WetTempModifierActive" operation="set" value="@$WetTempModifier">
+					<requirement name="CVarCompare" cvar="$WetTempModifier" operation="GT" value="@$WetTempModifierActive"/>
+				</triggered_effect>
+				<!-- Setup the display -->
+				<triggered_effect trigger="onSelfBuffUpdate" action="ModifyCVar" cvar="$WetTempModifierDisplay" operation="set" value="@$WetTempModifierActive"/>
+				<triggered_effect trigger="onSelfBuffUpdate" action="ModifyCVar" cvar="$WetTempModifierDisplay" operation="multiply" value="6.25"/>
+				<!-- Decrease the active counter -->
+				<triggered_effect trigger="onSelfBuffUpdate" action="ModifyCVar" cvar="$WetTempModifierActive" operation="subtract" value=".2"/>
+				<!-- Adjust thermal resistance stats -->
+				<passive_effect name="HypothermalResist" operation="base_subtract" value="@$WetTempModifierActive"/>
+				<passive_effect name="HyperthermalResist" operation="base_add" value="@$WetTempModifierActive"/>
+				<!-- If active counter is LT 1, remove buff -->
+				<triggered_effect trigger="onSelfBuffUpdate" action="RemoveBuff" buff="buffElementWet">
+					<requirement name="CVarCompare" cvar="$WetTempModifierActive" operation="LT" value="1"/>
+				</triggered_effect>
+				<!-- Reset active counter -->
+				<triggered_effect trigger="onSelfBuffRemove" action="RemoveCVar" cvar="$WetTempModifierActive"/>
+			</effect_group>
+
+			<effect_group>
+				<!-- If holding a torch OR near a campfire/forge/chem station, decrease the active counter faster -->
+				<requirements compare_type="or">
+					<requirement name="HoldingItemHasTags" tags="heldTorch"/>
+					<requirement name="HasBuff" buff="buffCampfireAOE"/>
+				</requirements>
+				<triggered_effect trigger="onSelfBuffUpdate" action="ModifyCVar" cvar="$WetTempModifierActive" operation="subtract" value=".4"/>
+			</effect_group>
+		</buff>
+		
+</configs>

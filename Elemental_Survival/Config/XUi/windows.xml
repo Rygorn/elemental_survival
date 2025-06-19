@@ -1,0 +1,6 @@
+
+<configs>
+	<set xpath="/windows/window[@name='CharacterFrameWindow']/grid/player_stats_entry[textcontent='' and valuecontent=''][1]">
+		<player_stats_entry backgroundcolor="[darkestGrey]" textcontent="{playercoretemptitle|once}" valuecontent="{playercoretemp}" />
+	</set>
+</configs>
