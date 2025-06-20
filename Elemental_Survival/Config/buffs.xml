@@ -182,6 +182,8 @@
 			<triggered_effect trigger="onSelfBuffUpdate" action="CVarLogValue" cvar="_shaded"/>
 			<triggered_effect trigger="onSelfBuffUpdate" action="CVarLogValue" cvar="_wetness"/>
 			<triggered_effect trigger="onSelfBuffUpdate" action="CVarLogValue" cvar="_coretemp"/>
+			<triggered_effect trigger="onSelfBuffUpdate" action="CVarLogValue" cvar=".bodytemp"/>
+			<triggered_effect trigger="onSelfBuffUpdate" action="CVarLogValue" cvar="_degreesabsorbed"/>
 			
 			
 			<!-- Weather Survival HOT -->
