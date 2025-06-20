@@ -176,9 +176,12 @@
 	
 	<append xpath="/buffs/buff[@name='buffStatusCheck01']">
 		<effect_group>
+		
+			<!-- Console logging of relevant values for testing. Comment out in release versions. -->
 			<triggered_effect trigger="onSelfBuffUpdate" action="CVarLogValue" cvar="_sheltered"/>
 			<triggered_effect trigger="onSelfBuffUpdate" action="CVarLogValue" cvar="_shaded"/>
 			<triggered_effect trigger="onSelfBuffUpdate" action="CVarLogValue" cvar="_wetness"/>
+			<triggered_effect trigger="onSelfBuffUpdate" action="CVarLogValue" cvar="_coretemp"/>
 			
 			
 			<!-- Weather Survival HOT -->
