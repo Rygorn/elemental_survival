@@ -3,7 +3,7 @@
 	<append xpath="/progression/perks">
 
 		<!-- *** WELL_INSULATED -->
-		<perk name="perkWellInsulated" max_level="3" parent="skillGeneralPerks" name_key="perkWellInsulatedName" desc_key="perkWellInsulatedDesc" icon="ui_game_symbol_temperature">
+		<perk name="perkWellInsulated" max_level="3" parent="skillGeneralPerks" name_key="perkWellInsulatedName" desc_key="perkWellInsulatedDesc" icon="ui_game_symbol_temperature" override_cost="1,2,3">
 			<!-- <level_requirements level="1"><requirement name="ProgressionLevel" progression_name="attFortitude" operation="GTE" value="1" desc_key="reqFortitudeLevel01"/></level_requirements>
 			<level_requirements level="2"><requirement name="ProgressionLevel" progression_name="attFortitude" operation="GTE" value="4" desc_key="reqFortitudeLevel04"/></level_requirements>
 			<level_requirements level="3"><requirement name="ProgressionLevel" progression_name="attFortitude" operation="GTE" value="7" desc_key="reqFortitudeLevel07"/></level_requirements> -->
