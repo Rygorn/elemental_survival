@@ -1,6 +1,11 @@
 
 <configs>
-	<set xpath="/windows/window[@name='CharacterFrameWindow']/grid/player_stats_entry[textcontent='' and valuecontent=''][1]">
+<!-- 	<set xpath="/windows/window[@name='CharacterFrameWindow']/grid/player_stats_entry[@textcontent='' and @valuecontent=''][1]">
 		<player_stats_entry backgroundcolor="[darkestGrey]" textcontent="{playercoretemptitle|once}" valuecontent="{playercoretemp}" />
-	</set>
+	</set> -->
+	
+	<append xpath="/windows/window[@name='CharacterFrameWindow']/grid[@visible='{showstats}' and @depth='0' and @pos='0,-86' and @width='327' and @cols='1' and @cell_height='30' and @repeat_content='false' and @arrangement='vertical']">
+        <player_stats_entry backgroundcolor="[darkestGrey]" textcontent="{playercoretemptitle|once}" valuecontent="{playercoretemp}" />
+        <player_stats_entry backgroundcolor="[darkGrey]" textcontent="" valuecontent="" />
+    </append>
 </configs>

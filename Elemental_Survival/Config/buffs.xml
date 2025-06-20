@@ -1,44 +1,6 @@
 
 <configs>
-	<append xpath="/buffs/buff[@name='buffStatusCheck01']">
-		<effect_group>
-			<triggered_effect trigger="onSelfBuffUpdate" action="CVarLogValue" cvar="_sheltered"/>
-			<triggered_effect trigger="onSelfBuffUpdate" action="CVarLogValue" cvar="_shaded"/>
-			<triggered_effect trigger="onSelfBuffUpdate" action="CVarLogValue" cvar="_wetness"/>
-			
-			
-			<!-- Weather Survival HOT -->
-			<triggered_effect trigger="onSelfBuffUpdate" action="AddOrRemoveBuff" buff="buffElementHot">
-				<requirement name="!HasBuff" buff="god"/>
-				<requirement name="CVarCompare" cvar="_coretemp" operation="GT" value="10"/>
-				<requirement name="CVarCompare" cvar="_coretemp" operation="LT" value="30"/>
-			</triggered_effect>
 
-			<triggered_effect trigger="onSelfBuffUpdate" action="AddOrRemoveBuff" buff="buffElementSweltering">
-				<requirement name="!HasBuff" buff="god"/>
-				<requirement name="ProgressionLevel" progression_name="perkWellInsulated" operation="LT" value="3"/>
-				<requirement name="CVarCompare" cvar="_coretemp" operation="GTE" value="30"/>
-			</triggered_effect>
-
-			<!-- Weather Survival COLD -->
-			<triggered_effect trigger="onSelfBuffUpdate" action="AddOrRemoveBuff" buff="buffElementCold">
-				<requirement name="!HasBuff" buff="god"/>
-				<requirement name="CVarCompare" cvar="_coretemp" operation="LT" value="-10"/>
-				<requirement name="CVarCompare" cvar="_coretemp" operation="GT" value="-30"/>
-			</triggered_effect>
-
-			<triggered_effect trigger="onSelfBuffUpdate" action="AddOrRemoveBuff" buff="buffElementFreezing">
-				<requirement name="!HasBuff" buff="god"/>
-				<requirement name="CVarCompare" cvar="_coretemp" operation="LTE" value="-30"/>
-				<requirement name="ProgressionLevel" progression_name="perkWellInsulated" operation="LT" value="3"/>
-			</triggered_effect>
-
-			<!-- Weather Survival WETNESS -->
-			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="buffElementWet">
-				<requirement name="CVarCompare" cvar="_wetness" operation="GT" value=".15"/>
-			</triggered_effect>
-		</effect_group>
-	</append>
 		
 		
 	<!-- *** xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
@@ -198,4 +160,59 @@
 			</effect_group>
 		</buff>
 		
+		<!-- *** buffCampfireAOEEffect -->
+		<!-- TRIGGERED_BY: Buffs = buffCampfireAOE -->
+		<!-- Grants an insulation buff -->
+		<buff name="buffCampfireAOEEffect" name_key="buffCampfireAOEEffectName" description_key="buffCampfireAOEEffectDesc" icon="ui_game_symbol_campfire">
+			<stack_type value="replace"/>
+			<duration value="2"/>
+
+			<effect_group>
+				<passive_effect name="HypothermalResist" operation="base_add" value="15"/>
+			</effect_group>
+		</buff>
+	</append>
+	
+	
+	<append xpath="/buffs/buff[@name='buffStatusCheck01']">
+		<effect_group>
+			<triggered_effect trigger="onSelfBuffUpdate" action="CVarLogValue" cvar="_sheltered"/>
+			<triggered_effect trigger="onSelfBuffUpdate" action="CVarLogValue" cvar="_shaded"/>
+			<triggered_effect trigger="onSelfBuffUpdate" action="CVarLogValue" cvar="_wetness"/>
+			
+			
+			<!-- Weather Survival HOT -->
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddOrRemoveBuff" buff="buffElementHot">
+				<requirement name="!HasBuff" buff="god"/>
+				<requirement name="CVarCompare" cvar="_coretemp" operation="GT" value="10"/>
+				<requirement name="CVarCompare" cvar="_coretemp" operation="LT" value="30"/>
+			</triggered_effect>
+
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddOrRemoveBuff" buff="buffElementSweltering">
+				<requirement name="!HasBuff" buff="god"/>
+				<requirement name="ProgressionLevel" progression_name="perkWellInsulated" operation="LT" value="3"/>
+				<requirement name="CVarCompare" cvar="_coretemp" operation="GTE" value="30"/>
+			</triggered_effect>
+
+			<!-- Weather Survival COLD -->
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddOrRemoveBuff" buff="buffElementCold">
+				<requirement name="!HasBuff" buff="god"/>
+				<requirement name="CVarCompare" cvar="_coretemp" operation="LT" value="-10"/>
+				<requirement name="CVarCompare" cvar="_coretemp" operation="GT" value="-30"/>
+			</triggered_effect>
+
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddOrRemoveBuff" buff="buffElementFreezing">
+				<requirement name="!HasBuff" buff="god"/>
+				<requirement name="CVarCompare" cvar="_coretemp" operation="LTE" value="-30"/>
+				<requirement name="ProgressionLevel" progression_name="perkWellInsulated" operation="LT" value="3"/>
+			</triggered_effect>
+
+			<!-- Weather Survival WETNESS -->
+			<triggered_effect trigger="onSelfBuffUpdate" action="AddBuff" buff="buffElementWet">
+				<requirement name="CVarCompare" cvar="_wetness" operation="GT" value=".15"/>
+			</triggered_effect>
+		</effect_group>
+	</append>
+	
+	
 </configs>
