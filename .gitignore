@@ -6,7 +6,7 @@
 !Elemental_Survival/**/*.dll
 
 # Ignore the lib folder (for local DLL references)
-lib/
+lib/*.dll
 
 # Debug symbols
 *.pdb
