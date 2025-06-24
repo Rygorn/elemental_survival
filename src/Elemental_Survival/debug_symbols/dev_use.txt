@@ -1,0 +1,1 @@
+Storage for .pdb files using a post-build script to move from the mod folder to here when built.
