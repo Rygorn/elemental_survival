@@ -160,6 +160,19 @@
 			</effect_group>
 		</buff>
 		
+		<!-- *** buffCampfireAOE -->
+		<!-- TRIGGERED_BY: Props = forge and campfire -->
+		<!-- Setup for buffCampfireAOEEffect -->
+		<buff name="buffCampfireAOE" hidden="true">
+			<stack_type value="ignore"/>
+			<duration value="1"/>
+
+			<!-- without the 2nd buff the buff display will flicker -->
+			<effect_group>
+				<triggered_effect trigger="onSelfBuffStart" action="AddBuff" buff="buffCampfireAOEEffect"/>
+			</effect_group>
+		</buff>
+		
 		<!-- *** buffCampfireAOEEffect -->
 		<!-- TRIGGERED_BY: Buffs = buffCampfireAOE -->
 		<!-- Grants an insulation buff -->

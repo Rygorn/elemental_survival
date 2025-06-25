@@ -1,0 +1,10 @@
+
+<configs>
+
+	<append xpath="/items/item[@name='meleeToolTorch']/effect_group[@name='meleeToolTorch']">
+		<passive_effect name="HypothermalResist" operation="base_add" value="7">
+			<requirement name="CVarCompare" cvar="_underwater" operation="LT" value="1"/>
+		</passive_effect>
+	</append>
+
+</configs>
