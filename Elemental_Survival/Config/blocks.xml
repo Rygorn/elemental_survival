@@ -2,12 +2,12 @@
 <configs>
 
 	<!-- Add ActiveRadiusEffects to forge -->
-	<append xpath="/blocks/block[@name='forge']
+	<append xpath="/blocks/block[@name='forge']">
 		<property name="ActiveRadiusEffects" value="buffCampfireAOE(5)"/>
 	</append>
 	
 	<!-- Add ActiveRadiusEffects to campfire -->
-	<append xpath="/blocks/block[@name='campfire']
+	<append xpath="/blocks/block[@name='campfire']">
 		<property name="ActiveRadiusEffects" value="buffCampfireAOE(3)"/>
 	</append>
 	
