@@ -1,0 +1,11 @@
+
+<configs>
+
+	<append xpath="/traders/trader_item_groups/trader_item_group[@name='groupArmorMods']">
+		<item name="modArmorInsulatedLiner"/>
+		<item name="modArmorCoolingMesh"/>
+	
+	</append>
+
+
+</configs>

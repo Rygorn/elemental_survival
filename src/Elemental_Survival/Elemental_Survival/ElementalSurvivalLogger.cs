@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class ElementalSurvivalLogger
 {
-    public static bool EnableDebugLogging = true;
+    public static bool EnableDebugLogging = false;
 
     public static void LogWeatherStats(EntityAlive entity)
     {
