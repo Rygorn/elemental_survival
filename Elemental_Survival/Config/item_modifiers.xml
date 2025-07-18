@@ -4,7 +4,7 @@
 	<append xpath="/item_modifiers">
 		<item_modifier name="modArmorInsulatedLiner" installable_tags="armor" modifier_tags="thermal" blocked_tags="noMods" type="attachment">
 			<property name="Extends" value="modGeneralMaster" param1="CustomIcon"/>
-			<property name="UnlockedBy" value="modArmorInsulatedLinerSchematic"/>
+			<!-- <property name="UnlockedBy" value="modArmorInsulatedLinerSchematic"/> -->
 			<property name="TraderStageTemplate" value="modsTier1"/>
 			<property name="DisplayType" value="modTempResist"/>
 			<property name="Material" value="Mcloth"/>
@@ -17,7 +17,7 @@
 
 		<item_modifier name="modArmorCoolingMesh" installable_tags="armor" modifier_tags="temperature" blocked_tags="noMods" type="attachment">
 			<property name="Extends" value="modGeneralMaster" param1="CustomIcon"/>
-			<property name="UnlockedBy" value="modArmorCoolingMeshSchematic"/>
+			<!-- <property name="UnlockedBy" value="modArmorCoolingMeshSchematic"/> -->
 			<property name="TraderStageTemplate" value="modsTier1"/>
 			<property name="DisplayType" value="modTempResist"/>
 			<property name="Material" value="Mplastics"/>
