@@ -1,7 +1,7 @@
 
 <configs>
 
-	<append xpath="/lootgroup[@name='modArmorT1']">
+	<append xpath="/lootcontainers/lootgroup[@name='modArmorT1']">
         <item name="modArmorInsulatedLiner"/>
 		<item name="modArmorCoolingMesh"/>
     </append>
