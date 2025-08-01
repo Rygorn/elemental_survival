@@ -1,10 +1,39 @@
 
 <configs>
 
+	<append xpath="/items">
+		<item name="modArmorInsulatedLinerSchematic">
+			<property name="Extends" value="schematicNoQualityMaster"/>
+			<property name="CreativeMode" value="None"/>
+			<property name="CustomIcon" value="modArmorInsulatedLiner"/>
+			<property name="Unlocks" value="modArmorInsulatedLiner"/>
+			<effect_group tiered="false">
+				<triggered_effect trigger="onSelfPrimaryActionEnd" action="ModifyCVar" cvar="modArmorInsulatedLiner" operation="set" value="1"/>
+				<triggered_effect trigger="onSelfPrimaryActionEnd" action="GiveExp" exp="50"/>
+			</effect_group>
+		</item>
+
+		<item name="modArmorCoolingMeshSchematic">
+			<property name="Extends" value="schematicNoQualityMaster"/>
+			<property name="CreativeMode" value="None"/>
+			<property name="CustomIcon" value="modArmorCoolingMesh"/>
+			<property name="Unlocks" value="modArmorCoolingMesh"/>
+			<effect_group tiered="false">
+				<triggered_effect trigger="onSelfPrimaryActionEnd" action="ModifyCVar" cvar="modArmorCoolingMesh" operation="set" value="1"/>
+				<triggered_effect trigger="onSelfPrimaryActionEnd" action="GiveExp" exp="50"/>
+			</effect_group>
+		</item>
+	</append>
+
 	<append xpath="/items/item[@name='meleeToolTorch']/effect_group[@name='meleeToolTorch']">
 		<passive_effect name="HypothermalResist" operation="base_add" value="7">
 			<requirement name="CVarCompare" cvar="_underwater" operation="LT" value="1"/>
 		</passive_effect>
+	</append>
+	
+	<append xpath="/items/item[@name='adminModSchematic']/effect_group">
+		<triggered_effect trigger="onSelfPrimaryActionEnd" action="ModifyCVar" cvar="modArmorInsulatedLiner" operation="set" value="1"/>
+		<triggered_effect trigger="onSelfPrimaryActionEnd" action="ModifyCVar" cvar="modArmorCoolingMesh" operation="set" value="1"/>
 	</append>
 
 </configs>
